@@ -1,10 +1,13 @@
 package models;
 
+import java.awt.Color;
+
 public class Bird {
 	
 	private int dimensions;
 	private int positionX;
 	private int positionY;
+	private static Color color = Color.DARK_GRAY;
 	
 	public Bird (int positionX, int positionY) {
 		
@@ -37,7 +40,10 @@ public class Bird {
 	public void setPositionY(int positionY) {
 		this.positionY = positionY;
 	}
-	
-	
+
+	public static Color getColor() {
+		return color;
+	}
+
 
 }
