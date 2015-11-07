@@ -2,9 +2,11 @@ package models;
 
 import java.awt.Color;
 
-public class Bird {
+public class Bird implements Runnable {
 	
-	private int dimensions;
+	private BirdState state;
+	
+	private int dimensions; // Diameter
 	private int positionX;
 	private int positionY;
 	private static Color color = Color.DARK_GRAY;
@@ -43,6 +45,13 @@ public class Bird {
 
 	public static Color getColor() {
 		return color;
+	}
+
+	@Override
+	public void run() {
+		
+		
+		
 	}
 
 

@@ -8,30 +8,26 @@ import javax.swing.JPanel;
 
 import models.Bird;
 import models.Food;
+import models.Model;
 
 public class ViewPanel extends JPanel {
 	
-	private ArrayList<Food> foods;
-	private ArrayList<Bird> birds;
+	private Model model;
 	
-	public ViewPanel () {
+	public ViewPanel (Model model) {
 		
+		this.model = model;		
 		this.setBackground(Color.WHITE);
-		
-		this.foods = new ArrayList<Food>();
-		this.birds = new ArrayList<Bird>();
-		
-		Food food = new Food(150, 150);
-		foods.add(food);
-		
-		Bird bird1 = new Bird(20, 20);
-		Bird bird2 = new Bird(400, 400);
-		birds.add(bird1);
-		birds.add(bird2);
 		
 	}
 	
 	public void paintComponent (Graphics g) {
+		
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		
+		ArrayList<Food> foods = this.model.getFoods();
+		ArrayList<Bird> birds = this.model.getBirds();
 		
 		g.setColor(Food.getColor());
 		for (Food food : foods) {
@@ -40,9 +36,16 @@ public class ViewPanel extends JPanel {
 		
 		g.setColor(Bird.getColor());
 		for (Bird bird : birds) {
-			g.fillOval(bird.getPositionX(), bird.getPositionY(), bird.getDimensions(), bird.getDimensions());
+			int centerX = bird.getPositionX() - (bird.getDimensions() / 2);
+			int centerY = bird.getPositionY() - (bird.getDimensions() / 2);
+			
+			g.fillOval(centerX, centerY, bird.getDimensions(), bird.getDimensions());
 		}
 		
+	}
+	
+	public void setModel (Model model) {
+		this.model = model;		
 	}
 
 }

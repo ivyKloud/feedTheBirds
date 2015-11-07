@@ -4,6 +4,7 @@ import java.awt.Color;
 
 public class Food {
 	
+	private boolean isFresh;
 	private int dimensions;
 	private int positionX;
 	private int positionY;
@@ -11,10 +12,19 @@ public class Food {
 	
 	public Food (int positionX, int positionY) {
 		
+		this.isFresh = true;
 		this.dimensions = 5;
 		this.positionX = positionX;
 		this.positionY = positionY;
 		
+	}
+	
+	public boolean isFresh() {
+		return isFresh;
+	}
+
+	public void setFresh(boolean isFresh) {
+		this.isFresh = isFresh;
 	}
 
 	public int getDimensions() {
