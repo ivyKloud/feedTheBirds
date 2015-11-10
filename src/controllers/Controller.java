@@ -6,8 +6,13 @@ import java.awt.event.MouseListener;
 import models.Model;
 import views.View;
 
+/**
+ * Handle the clicks on the Window to update the model
+ * @author Major
+ *
+ */
 public class Controller implements MouseListener {
-	
+
 	private Model model;
 	private View view;
 	
@@ -18,39 +23,39 @@ public class Controller implements MouseListener {
 		
 	}
 	
+	// Mouse events //
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		
-		int positionX = arg0.getX();
-		int positionY = arg0.getY();
+		int clicX = arg0.getX() - 3;
+		int clicY = arg0.getY() - 25;
 		
-		// Move the birds to the point we clicked on
-		this.model.moveBirds(positionX, positionY);
+		this.model.newFood(clicX, clicY);
 		
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
+	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
+	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 }

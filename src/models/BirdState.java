@@ -1,18 +1,25 @@
 package models;
 
+/**
+ * Different states of a bird
+ * @author major
+ * 
+ */
 public enum BirdState {
-	Eat("is eating"),
-	Immobile("doing nothing"),
-	Move("is moving"),
-	Affraid("is scared");
+
+	IMMOBILE("is sleeping"),
+	EAT("is eating"),
+	MOVE("is moving"),
+	AFFRAID("is scared");
 	
-	private String state = "";
-	   
-	BirdState(String state){
-		this.state = state;
+	private String action;
+	
+	BirdState (String action) {
+		this.action = action;
 	}
-	   
-	public String toString(){
-		return state;
+	
+	public String toString () {
+		return this.action;
 	}
+	
 }

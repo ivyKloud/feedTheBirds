@@ -1,58 +1,60 @@
 package models;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
-public class Food {
+/**
+ * Class representing a Food
+ * @author major
+ *
+ */
+public class Food extends Entity {
 	
 	private boolean isFresh;
-	private int dimensions;
-	private int positionX;
-	private int positionY;
-	private static Color color = Color.BLUE;
+	private long timeEndFreshness;
 	
+	private static final long TIME_FRESHNESS = 10_000;
+	
+	/**
+	 * Initializing with a dimension of (Will be square)
+	 * Color = blue when fresh, green otherwise
+	 * isFresh when initializated
+	 * @param positionX
+	 * @param positionY
+	 */
 	public Food (int positionX, int positionY) {
+		super(4, positionX, positionY, Color.BLUE);
 		
+		this.timeEndFreshness = System.currentTimeMillis() + TIME_FRESHNESS;
 		this.isFresh = true;
-		this.dimensions = 5;
-		this.positionX = positionX;
-		this.positionY = positionY;
-		
 	}
 	
+	/**
+	 * Method for drawinf a food :
+	 * Small square with a size of 4 pixels
+	 */
+	@Override
+	public void draw(Graphics g) {
+		g.setColor(this.color);
+		g.fillRect(this.position.getX(), this.position.getY(), this.dimension, this.dimension);
+	}
+
+	// Getters and Setters //
 	public boolean isFresh() {
 		return isFresh;
 	}
 
 	public void setFresh(boolean isFresh) {
+		if (isFresh)
+			this.setColor(Color.BLUE);
+		else
+			this.setColor(Color.GREEN);
+		
 		this.isFresh = isFresh;
 	}
 
-	public int getDimensions() {
-		return dimensions;
-	}
-
-	public void setDimensions(int dimensions) {
-		this.dimensions = dimensions;
-	}
-
-	public int getPositionX() {
-		return positionX;
-	}
-
-	public void setPositionX(int positionX) {
-		this.positionX = positionX;
-	}
-
-	public int getPositionY() {
-		return positionY;
-	}
-
-	public void setPositionY(int positionY) {
-		this.positionY = positionY;
-	}
-	
-	public static Color getColor() {
-		return color;
+	public long getTimeEndFreshness() {
+		return timeEndFreshness;
 	}
 
 }
