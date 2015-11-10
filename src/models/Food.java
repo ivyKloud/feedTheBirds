@@ -12,6 +12,7 @@ public class Food extends Entity {
 	
 	private boolean isFresh;
 	private long timeEndFreshness;
+	private boolean isLocked;
 	
 	private static final long TIME_FRESHNESS = 10_000;
 	
@@ -23,10 +24,11 @@ public class Food extends Entity {
 	 * @param positionY
 	 */
 	public Food (int positionX, int positionY) {
-		super(4, positionX, positionY, Color.BLUE);
+		super(4, positionX, positionY, Color.RED);
 		
 		this.timeEndFreshness = System.currentTimeMillis() + TIME_FRESHNESS;
 		this.isFresh = true;
+		this.isLocked = false;
 	}
 	
 	/**
@@ -55,6 +57,14 @@ public class Food extends Entity {
 
 	public long getTimeEndFreshness() {
 		return timeEndFreshness;
+	}
+
+	public boolean isLocked() {
+		return isLocked;
+	}
+
+	public void setLocked(boolean isLocked) {
+		this.isLocked = isLocked;
 	}
 
 }

@@ -68,6 +68,10 @@ public class Bird extends Entity {
 	}
 	
 	// Getters and Setters //
+	public int getNumBird() {
+		return this.numBird;
+	}
+	
 	public BirdState getState() {
 		return state;
 	}

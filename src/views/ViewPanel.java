@@ -42,69 +42,83 @@ public class ViewPanel extends JPanel {
 	 * Animation handling
 	 */
 	public void animate () {
-		
+				
 		int speed = 50;
-		
-		final Bird test = model.getBirds().get(0);
-		
-		// Swing Timer to handle the animation thread
 		Timer timer = new Timer(speed, null);
-		
+		// Swing Timer to handle the animation thread
 		timer.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				boolean stopAnimation = true;
+				
 				final long now = System.currentTimeMillis();
 
 				// Update the food freshness
-				for (Food food: model.getFoods())
-					if (food.isFresh())
+				for (Food food: model.getFoods()) {
+					if (food.isFresh()) {
+						// If there is at least one fresh food, we won't stop the animation
+						stopAnimation = false;
+						
 						if (food.getTimeEndFreshness() < now)
 							food.setFresh(false);
+					}
+				}
+				
+				if (model.getFoods().isEmpty())
+					stopAnimation = true;
 							
-				// for bird in birds
-				// Here it's done for 1 bird : test
-				Food targetFood = null;
-				int distance = 10_000;
-				
-				// Determine the food to target, i.e. the closest (it has to be fresh)
-				for (Food food: model.getFoods()) {
-					int newDistance = test.getPosition().distanceWith(food.getPosition());
+				for (Bird bird: model.getBirds()) {
+					Food targetFood = null;						
 					
-					if (newDistance < distance && food.isFresh()) {
-						distance = newDistance;
-						targetFood = food;
-					}
-				}
-				
-				if (targetFood != null) {
-					// Set target food for the bird
-					test.setFoodLocked(targetFood);
-					test.setTargetPosition(targetFood.getPosition());
+					int distance = 10_000;
 					
-					// If it has arrived on the food, it eats it
-					if (distance == 0) {
-						if (test.getState() != BirdState.EAT)
-							test.setState(BirdState.EAT);
+					// Determine the food to target, i.e. the closest (it has to be fresh)
+					for (Food food: model.getFoods()) {
+						int newDistance = bird.getPosition().distanceWith(food.getPosition());
 						
-						// It takes TIME_EATING ms to eat
-						if (now > (test.getBeginEating() + Bird.TIME_EATING)) {
-							test.setFoodLocked(null);
-							test.setTargetPosition(null);
-							model.removeFood(targetFood);
+						if (newDistance < distance && food.isFresh() && (!food.isLocked() || bird.getState() == BirdState.EAT)) {
+							distance = newDistance;
+							targetFood = food;
 						}
-					} else {
-						// If the bird is not on the food, it keeps moving
-						test.setState(BirdState.MOVE);
-						test.moveToTarget();
 					}
-					
+															
+					if (targetFood != null) {
+						// Set target food for the bird
+						bird.setFoodLocked(targetFood);
+						bird.setTargetPosition(targetFood.getPosition());
+						
+						// If it has arrived on the food, it eats it
+						if (distance == 0) {
+							if (bird.getState() != BirdState.EAT && !targetFood.isLocked()) {
+								bird.setState(BirdState.EAT);
+								targetFood.setLocked(true);
+							}
+							
+							// It takes TIME_EATING ms to eat
+							if (now > (bird.getBeginEating() + Bird.TIME_EATING)) {
+								bird.setFoodLocked(null);
+								bird.setTargetPosition(null);
+								bird.setState(BirdState.IMMOBILE);
+								model.removeFood(targetFood);
+							}
+						} else {
+							// If the bird is not on the food, it keeps moving
+							bird.setState(BirdState.MOVE);
+							bird.moveToTarget();
+						}
+						
+					} 
+				
 				}
-				// End for
 				
 				repaint();
 				
+				if (stopAnimation) {
+					timer.stop();
+				}
+					
 			}
 			
 		});
