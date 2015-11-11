@@ -57,4 +57,9 @@ public class Position {
         return 1;
     }
 
+    public double getDistance(Position position) {
+        int xCalc = position.getX() - this.getX();
+        int yCalc = position.getY() - this.getY();
+        return Math.sqrt(xCalc*xCalc + yCalc * yCalc);
+    }
 }

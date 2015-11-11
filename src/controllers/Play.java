@@ -13,19 +13,22 @@ public class Play {
 
 		int wMap = 500;
 		int hMap = 500;
-		int sleepDuration = 1000;
+		int sleepDuration = 50;
 		int nbBirds = 5;
 		Simulation sim = new Simulation(wMap,hMap);
-		TheView view = new TheView(wMap,hMap);
+		TheView view = new TheView(wMap,hMap,sim);
 
 		sim.setBirds(nbBirds);
-		sim.addFood(new Position(50,50));
-		sim.addFood(new Position(250,375));
+
+//		sim.addFood(new Position(50,50));
+//		sim.addFood(new Position(250,375));
+//		sim.addFood(new Position(375,400));
+
 
 		while (true) {
 			//System.out.println("Tour "+i++);
 			sim.nextStep();
-			view.paint(sim);
+			view.paint();
 
 			try {
 				Thread.sleep(sleepDuration);

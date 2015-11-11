@@ -1,6 +1,7 @@
 package simulation;
 
 import simulation.world.Bird;
+import simulation.world.BirdState;
 import simulation.world.Food;
 import simulation.world.Position;
 
@@ -26,7 +27,16 @@ public class Simulation {
     }
 
     public void nextStep() {
+        Food closerFood;
 
+        for(Bird b : birds){
+            closerFood = b.getCloserFood(this.food);
+            if(closerFood != null){
+                b.nextPos(closerFood,posMax);
+            }else{
+                b.setState(BirdState.Sleep);
+            }
+        }
     }
 
     public void setBirds(int nbBirds){
