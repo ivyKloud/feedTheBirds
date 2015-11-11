@@ -42,9 +42,9 @@ public class ViewPanel extends JPanel {
 	 * Animation handling
 	 */
 	public void animate () {
-				
+		
 		int speed = 50;
-		Timer timer = new Timer(speed, null);
+		final Timer timer = new Timer(speed, null);
 		// Swing Timer to handle the animation thread
 		timer.addActionListener(new ActionListener() {
 
